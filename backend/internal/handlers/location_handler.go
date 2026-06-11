@@ -34,7 +34,6 @@ func UpdateVehicleLocation(c *gin.Context) {
 		return
 	}
 
-	// Check vehicle exists
 	var vehicle models.Vehicle
 
 	if err := database.DB.First(&vehicle, "id = ?", req.VehicleID).Error; err != nil {
@@ -55,7 +54,6 @@ func UpdateVehicleLocation(c *gin.Context) {
 
 	database.DB.Create(&location)
 
-	// Check all geofences
 	var geofences []models.Geofence
 	database.DB.Find(&geofences)
 
@@ -111,6 +109,14 @@ func UpdateVehicleLocation(c *gin.Context) {
 			}
 
 			database.DB.Create(&violation)
+
+			BroadcastAlert(
+				Alert{
+					VehicleID:  req.VehicleID,
+					GeofenceID: geofence.ID,
+					EventType:  "entry",
+				},
+			)
 		}
 
 		// EXIT
@@ -127,6 +133,14 @@ func UpdateVehicleLocation(c *gin.Context) {
 			}
 
 			database.DB.Create(&violation)
+
+			BroadcastAlert(
+				Alert{
+					VehicleID:  req.VehicleID,
+					GeofenceID: geofence.ID,
+					EventType:  "exit",
+				},
+			)
 		}
 
 		fmt.Println(

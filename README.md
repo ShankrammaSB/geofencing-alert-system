@@ -1,131 +1,209 @@
-# Geofencing Real-Time Alert System
+# 🚀 Geofencing Alert System
 
-## Overview
+A real-time geofencing and vehicle monitoring platform built using Go, PostgreSQL, Next.js, WebSockets, and Docker.
 
-A real-time geofencing system built using Go, Gin, PostgreSQL, Docker, and GORM.
+## 📌 Overview
 
-The system allows:
+This system tracks vehicle locations, detects geofence entry and exit events, stores violations, and provides real-time alerts through WebSockets.
 
-* Vehicle registration
-* Geofence creation
-* Vehicle location tracking
-* Point-in-polygon detection
-* Entry and exit event detection
-* Violation history tracking
-* Dockerized deployment
+Users can monitor vehicles, geofences, violations, and live tracking activity through a responsive dashboard.
 
 ---
 
-## Tech Stack
+## ✨ Features
+
+### Backend
+
+- Vehicle Management APIs
+- Geofence Management APIs
+- Vehicle Location Tracking
+- Geofence Entry/Exit Detection
+- Violation Logging
+- Real-Time WebSocket Alerts
+- PostgreSQL Integration
+- Docker Support
+
+### Frontend
+
+- Dashboard Overview
+- Vehicle Monitoring
+- Geofence Monitoring
+- Violation History
+- Live Alert Notifications
+- Interactive Map Visualization
+- Responsive UI
+
+---
+
+## 🛠 Tech Stack
+
+### Backend
+
+- Go
+- Gin
+- GORM
+- PostgreSQL
+- Gorilla WebSocket
+- Docker
+
+### Frontend
+
+- Next.js
+- React
+- TypeScript
+- Tailwind CSS
+- Axios
+- React Leaflet
+
+---
+
+## 📂 Project Structure
+
+```text
+geofencing-alert-system/
+│
+├── backend/
+│   ├── cmd/
+│   ├── internal/
+│   └── README.md
+│
+├── frontend/
+│   ├── src/
+│   └── README.md
+│
+├── screenshots/
+│
+└── README.md
+```
+
+---
+
+## 📸 Screenshots
+
+### Dashboard
+
+![Dashboard](screenshots/dashboard.png)
+
+### Vehicles
+
+![Vehicles](screenshots/vehicles.png)
+
+### Geofences
+
+![Geofences](screenshots/geofences.png)
+
+### Violations
+
+![Violations](screenshots/violations.png)
+
+### Live Alerts
+
+![Live Alerts](screenshots/live-alerts.png)
+
+### Map
+
+![Map](screenshots/map.png)
+
+---
+
+## ⚙️ Backend Setup
+
+```bash
+cd backend
+
+go mod tidy
+
+docker compose up -d postgres
+
+go run ./cmd
+```
 
 Backend:
 
-* Go
-* Gin
-* GORM
-
-Database:
-
-* PostgreSQL
-
-Containerization:
-
-* Docker
-* Docker Compose
+```text
+http://localhost:8080
+```
 
 ---
 
-## Features
+## ⚙️ Frontend Setup
 
-### Vehicle Management
+```bash
+cd frontend
 
-* Create Vehicle
-* List Vehicles
+npm install
 
-### Geofence Management
+npm run dev
+```
 
-* Create Geofence
-* List Geofences
+Frontend:
 
-### Location Tracking
+```text
+http://localhost:3000
+```
 
-* Update Vehicle Location
+---
 
-### Geofence Detection
+## 🔌 WebSocket
 
-* Point-In-Polygon using Ray Casting Algorithm
+Connect:
 
-### Event Detection
+```text
+ws://localhost:8080/ws/alerts
+```
 
-* Entry Detection
-* Exit Detection
+Events:
 
-### Violation Tracking
-
-* Entry History
-* Exit History
+- entry
+- exit
 
 ---
 
 ## API Endpoints
 
-### Health Check
-
-GET /health
-
 ### Vehicles
 
-POST /vehicles
-
+```http
 GET /vehicles
+POST /vehicles
+```
 
 ### Geofences
 
-POST /geofences
-
+```http
 GET /geofences
+POST /geofences
+```
 
-### Location Updates
+### Locations
 
+```http
+GET /locations
 POST /vehicles/location
+```
 
 ### Violations
 
+```http
 GET /violations
+```
 
-### Geofence State
+### Alerts
 
-GET /states
+```http
+GET /ws/alerts
+```
 
----
+### Health
 
-## Running Locally
-
-```bash
-cd backend
-go run ./cmd
+```http
+GET /health
 ```
 
 ---
 
-## Running with Docker
+## 👨‍💻 Author
 
-```bash
-docker compose up --build
-```
+**Shankramma Bhagashetti**
 
----
-
-## Architecture
-
-Vehicle → Location Update → Geofence Detection → Entry/Exit Event → Violation Storage
-
----
-
-## Future Improvements
-
-* WebSocket Alerts
-* Live Dashboard
-* Authentication
-* Real-time Vehicle Tracking Map
-* Frontend Dashboard
+MCA Graduate | Python Developer | AI/ML Enthusiast

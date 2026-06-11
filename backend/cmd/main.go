@@ -5,6 +5,7 @@ import (
 	"geofencing/internal/handlers"
 	"geofencing/internal/models"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
@@ -21,6 +22,7 @@ func main() {
 	)
 
 	router := gin.Default()
+	router.Use(cors.Default())
 
 	router.GET("/health", func(c *gin.Context) {
 		c.JSON(200, gin.H{
@@ -37,6 +39,8 @@ func main() {
 	router.GET("/test-geofence", handlers.TestGeofence)
 	router.GET("/violations", handlers.GetViolations)
 	router.GET("/states", handlers.GetStates)
+	router.GET("/ws/alerts", handlers.AlertWebSocket)
+	router.GET("/locations", handlers.GetLocations)
 
 	router.Run(":8080")
 }
