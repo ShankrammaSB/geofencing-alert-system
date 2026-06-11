@@ -21,8 +21,14 @@ func Connect() {
 		log.Println(".env file not found")
 	}
 
+	// Debug environment variables
+	log.Println("DB_HOST =", os.Getenv("DB_HOST"))
+	log.Println("DB_USER =", os.Getenv("DB_USER"))
+	log.Println("DB_NAME =", os.Getenv("DB_NAME"))
+	log.Println("DB_PORT =", os.Getenv("DB_PORT"))
+
 	dsn := fmt.Sprintf(
-		"host=%s user=%s password=%s dbname=%s port=%s sslmode=disable",
+		"host=%s user=%s password=%s dbname=%s port=%s sslmode=require",
 		os.Getenv("DB_HOST"),
 		os.Getenv("DB_USER"),
 		os.Getenv("DB_PASSWORD"),
@@ -43,7 +49,9 @@ func Connect() {
 			break
 		}
 
+		log.Printf("Database connection failed: %v\n", err)
 		log.Printf("Waiting for database... Attempt %d/10\n", i+1)
+
 		time.Sleep(3 * time.Second)
 	}
 
