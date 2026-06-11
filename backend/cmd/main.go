@@ -1,0 +1,42 @@
+package main
+
+import (
+	"geofencing/internal/database"
+	"geofencing/internal/handlers"
+	"geofencing/internal/models"
+
+	"github.com/gin-gonic/gin"
+)
+
+func main() {
+
+	database.Connect()
+
+	database.DB.AutoMigrate(
+		&models.Vehicle{},
+		&models.Geofence{},
+		&models.Location{},
+		&models.Violation{},
+		&models.GeofenceState{},
+	)
+
+	router := gin.Default()
+
+	router.GET("/health", func(c *gin.Context) {
+		c.JSON(200, gin.H{
+			"message": "Backend Running",
+		})
+	})
+
+	// Vehicle APIs
+	router.POST("/vehicles", handlers.CreateVehicle)
+	router.GET("/vehicles", handlers.GetVehicles)
+	router.POST("/geofences", handlers.CreateGeofence)
+	router.GET("/geofences", handlers.GetGeofences)
+	router.POST("/vehicles/location", handlers.UpdateVehicleLocation)
+	router.GET("/test-geofence", handlers.TestGeofence)
+	router.GET("/violations", handlers.GetViolations)
+	router.GET("/states", handlers.GetStates)
+
+	router.Run(":8080")
+}
