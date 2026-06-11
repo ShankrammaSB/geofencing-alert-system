@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"time"
 
 	"github.com/joho/godotenv"
 	"gorm.io/driver/postgres"
@@ -29,7 +30,22 @@ func Connect() {
 		os.Getenv("DB_PORT"),
 	)
 
-	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+	var db *gorm.DB
+
+	for i := 0; i < 10; i++ {
+
+		db, err = gorm.Open(
+			postgres.Open(dsn),
+			&gorm.Config{},
+		)
+
+		if err == nil {
+			break
+		}
+
+		log.Printf("Waiting for database... Attempt %d/10\n", i+1)
+		time.Sleep(3 * time.Second)
+	}
 
 	if err != nil {
 		log.Fatal("Failed to connect database")
